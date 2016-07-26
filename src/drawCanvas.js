@@ -30,8 +30,12 @@ const drawCanvas = (canvasId, nodes, synapses, changeNode) => {
     const node1 = nodes.filter(node => node.id === synapse.node1_id)[0]
     const node2 = nodes.filter(node => node.id === synapse.node2_id)[0]
     const line = new Shape()
+    line.graphics.setStrokeStyle(1)
+    line.graphics.beginStroke('red')
     line.graphics.moveTo(node1.x, node1.y)
     line.graphics.lineTo(node2.x, node2.y)
+    line.graphics.endStroke()
+    stage.addChild(line)
   })
   stage.update()
 }
