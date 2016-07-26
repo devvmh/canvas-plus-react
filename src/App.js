@@ -165,6 +165,7 @@ class App extends Component {
             </li>
           ))}
         </ul>
+        <PixiCanvas width={200} height={200} state={this.state} setState={this.lsSetState} />
       </div>
     );
   }
