@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import drawCanvas from './drawCanvas.js'
+import PixiCanvas from './PixiCanvas.js'
 
 const STATE_VERSION = 1
 
