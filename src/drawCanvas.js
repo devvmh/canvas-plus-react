@@ -1,14 +1,12 @@
 const { Stage, Shape } = window.createjs
 
-const drawCanvas = (canvasId, nodes, changeNode) => {
-  //if (!window.stage) {
-  //  window.stage = new Stage(document.getElementById(canvasId))
-  //}
+const drawCanvas = (canvasId, nodes, synapses, changeNode) => {
   const stage = new Stage(document.getElementById(canvasId))
-  nodes.forEach((node, index) => {
+  nodes.forEach(node => {
     const circle = new Shape()
     circle.graphics.beginFill(node.color).drawCircle(node.x, node.y, node.radius)
     circle.on("mousedown", function(e) {
+      // needed for dragging since e.target is set at 0, 0 in pressmove
       this.offset = {
         x: e.target.x - e.stageX,
         y: e.target.y - e.stageY
@@ -27,6 +25,13 @@ const drawCanvas = (canvasId, nodes, changeNode) => {
       })
     })
     stage.addChild(circle)
+  })
+  synapses.forEach(synapse => {
+    const node1 = nodes.filter(node => node.id === synapse.node1_id)[0]
+    const node2 = nodes.filter(node => node.id === synapse.node2_id)[0]
+    const line = new Shape()
+    line.graphics.moveTo(node1.x, node1.y)
+    line.graphics.lineTo(node2.x, node2.y)
   })
   stage.update()
 }
