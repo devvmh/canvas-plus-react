@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import './App.css';
 import drawCanvas from './drawCanvas.js'
 
+const STATE_VERSION = 1
+
 class App extends Component {
   constructor(props) {
     super(props)
@@ -11,27 +13,32 @@ class App extends Component {
     if (success) {
       try {
         this.state = JSON.parse(savedState)
+        if (this.state.STATE_VERSION !== STATE_VERSION) {
+          success = false
+        }
       } catch(e) {
         success = false
       }
     }
     if (!success) {
       this.state = {
+        STATE_VERSION,
         nextX: '',
         nextY: '',
-        nodes: [
-          { x: 10, y: 10, color: '#FF0000', radius: 5 }
-        ]
+        byId: {
+          1: { id: 1, x: 10, y: 10, color: '#FF0000', radius: 5 }
+        },
+        nodeIds: [1]
       }
     }
   }
 
   componentDidMount = () => {
-    drawCanvas('test-canvas', this.state.nodes)
+    drawCanvas('test-canvas', this.nodes(), this.handleChangeNode)
   }
 
   componentDidUpdate = (prevProps, prevState) => {
-    drawCanvas('test-canvas', this.state.nodes)
+    drawCanvas('test-canvas', this.nodes(), this.handleChangeNode)
   }
 
   lsSetState = changes => {
@@ -40,20 +47,34 @@ class App extends Component {
     this.setState(newState)
   }
 
+  nodes = () => {
+    return this.state.nodeIds.map(id => this.state.byId[id])
+  }
+
   handleAddNode = () => {
     const newState = Object.assign({}, this.state)
-    newState.nodes.push({
+    const nextId = this.state.nodeIds[this.state.nodeIds.length - 1] + 1
+    newState.byId[nextId] = {
+      id: nextId,
       x: parseInt(this.state.nextX, 10),
       y: parseInt(this.state.nextY, 10),
       radius: 5,
       color: '#FF0000'
-    })
+    }
+    newState.nodeIds.push(nextId)
     this.lsSetState(newState)
   }
 
-  handleRemoveNode = index => () => {
+  handleChangeNode = (id, node) => {
     const newState = Object.assign({}, this.state)
-    newState.nodes.splice(index, 1)
+    newState.byId[id] = node
+    this.lsSetState(newState)
+  }
+
+  handleRemoveNode = id => () => {
+    const newState = Object.assign({}, this.state)
+    delete newState.byId[id]
+    newState.nodeIds = newState.nodeIds.filter(oldId => oldId !== id)
     this.lsSetState(newState)
   }
 
@@ -79,10 +100,10 @@ class App extends Component {
           <button onClick={this.handleAddNode}>Add node</button>
         </p>
         <ul style={{ listStyle: 'none' }}>
-          {this.state.nodes.map((node, index) => (
-            <li key={index}>
+          {this.nodes().map(node => (
+            <li key={node.id}>
               <span>{JSON.stringify(node)}</span>
-              <button onClick={this.handleRemoveNode(index)}>Remove node</button>
+              <button onClick={this.handleRemoveNode(node.id)}>Remove node</button>
             </li>
           ))}
         </ul>
