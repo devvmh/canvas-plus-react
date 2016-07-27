@@ -94,7 +94,7 @@ class App extends Component {
 
   handleRemoveNode = id => () => {
     const newState = Object.assign({}, this.state)
-    delete newState.byId[id]
+    delete newState.nodes.byId[id]
     newState.nodes.ids = newState.nodes.ids.filter(oldId => oldId !== id)
     this.lsSetState(newState)
   }

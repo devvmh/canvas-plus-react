@@ -18,7 +18,7 @@ class PixiCanvas extends Component {
 
   render = () => {
     return (
-      <Stage width={this.props.width} height={this.props.height} backgroundColor={0xeeeeee}>
+      <Stage width={this.props.width} height={this.props.height} backgroundColor={0x000000}>
         {this.synapses().map(synapse => {
           return (
             <Synapse key={`from${synapse.node1_id}to${synapse.node2_id}`}
