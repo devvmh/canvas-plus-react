@@ -139,7 +139,7 @@ class App extends Component {
   }
 
   handleClearState = () => {
-    window.localStorage.set('state', null)
+    window.localStorage.setItem('state', null)
     window.location.reload()
   }
 
@@ -175,7 +175,8 @@ class App extends Component {
           ))}
         </ul>
         <PixiCanvas width={200} height={200} state={this.state} setState={this.lsSetState} />
-        <button onClick={this.handleClearState}>Clear state</button>
+        <br/>
+        <button onClick={this.handleClearState}>Reset state</button>
       </div>
     );
   }
