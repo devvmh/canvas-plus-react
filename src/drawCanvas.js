@@ -2,6 +2,17 @@ const { Stage, Shape } = window.createjs
 
 const drawCanvas = (canvasId, nodes, synapses, changeNode) => {
   const stage = new Stage(document.getElementById(canvasId))
+  synapses.forEach(synapse => {
+    const node1 = nodes.filter(node => node.id === synapse.node1_id)[0]
+    const node2 = nodes.filter(node => node.id === synapse.node2_id)[0]
+    const line = new Shape()
+    line.graphics.setStrokeStyle(1)
+    line.graphics.beginStroke('black')
+    line.graphics.moveTo(node1.x, node1.y)
+    line.graphics.lineTo(node2.x, node2.y)
+    line.graphics.endStroke()
+    stage.addChild(line)
+  })
   nodes.forEach(node => {
     const circle = new Shape()
     circle.graphics.beginFill(node.color).drawCircle(node.x, node.y, node.radius)
@@ -25,17 +36,6 @@ const drawCanvas = (canvasId, nodes, synapses, changeNode) => {
       })
     })
     stage.addChild(circle)
-  })
-  synapses.forEach(synapse => {
-    const node1 = nodes.filter(node => node.id === synapse.node1_id)[0]
-    const node2 = nodes.filter(node => node.id === synapse.node2_id)[0]
-    const line = new Shape()
-    line.graphics.setStrokeStyle(1)
-    line.graphics.beginStroke('black')
-    line.graphics.moveTo(node1.x, node1.y)
-    line.graphics.lineTo(node2.x, node2.y)
-    line.graphics.endStroke()
-    stage.addChild(line)
   })
   stage.update()
 }

@@ -9,7 +9,7 @@ class App extends Component {
   constructor(props) {
     super(props)
 
-    const savedState = localStorage.getItem('state')
+    const savedState = window.localStorage.getItem('state')
     let success = !!savedState
     if (success) {
       try {
@@ -58,7 +58,7 @@ class App extends Component {
 
   lsSetState = changes => {
     const newState = Object.assign({}, this.state, changes)
-    localStorage.setItem('state', JSON.stringify(newState))
+    window.localStorage.setItem('state', JSON.stringify(newState))
     this.setState(newState)
   }
 
@@ -96,6 +96,14 @@ class App extends Component {
     const newState = Object.assign({}, this.state)
     delete newState.nodes.byId[id]
     newState.nodes.ids = newState.nodes.ids.filter(oldId => oldId !== id)
+    const synapsesToDelete = newState.synapses.ids.filter(sid => {
+      const synapse = newState.synapses.byId[sid]
+      return synapse.node1_id === id || synapse.node2_id === id
+    })
+    newState.synapses.ids = newState.synapses.ids.filter(oldId => (
+      !synapsesToDelete.includes(oldId)
+    ))
+    synapsesToDelete.forEach(sid => delete newState.synapses.byId[sid])
     this.lsSetState(newState)
   }
 
@@ -130,6 +138,11 @@ class App extends Component {
     })
   }
 
+  handleClearState = () => {
+    window.localStorage.set('state', null)
+    window.location.reload()
+  }
+
   render = () => {
     return (
       <div className="App">
@@ -162,6 +175,7 @@ class App extends Component {
           ))}
         </ul>
         <PixiCanvas width={200} height={200} state={this.state} setState={this.lsSetState} />
+        <button onClick={this.handleClearState}>Clear state</button>
       </div>
     );
   }
