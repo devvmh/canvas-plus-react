@@ -28,7 +28,7 @@ class PixiCanvas extends Component {
           )
         })}
         {this.nodes().map(node => {
-          return <Node key={`id${node.id}x${node.x}y${node.y}`} nodeX={node.x} nodeY={node.y} radius={5} />
+          return <Node key={`id${node.id}x${node.x}y${node.y}`} node={node} nodeX={node.x} nodeY={node.y} radius={5} />
         })}
       </Stage>
     )

@@ -27,13 +27,14 @@ class App extends Component {
         inputs: {
           nextX: '',
           nextY: '',
+          nextColor: '#ff0000',
           node1_id: '',
           node2_id: ''
         },
         nodes: {
           byId: {
-            1: { id: 1, x: 10, y: 10, color: '#FF0000', radius: 5 },
-            2: { id: 2, x: 110, y: 10, color: '#FF0000', radius: 5 }
+            1: { id: 1, x: 10, y: 10, color: '#ff0000', radius: 5 },
+            2: { id: 2, x: 110, y: 10, color: '#ff0000', radius: 5 }
           },
           ids: [1, 2]
         },
@@ -79,7 +80,7 @@ class App extends Component {
       x: parseInt(this.state.inputs.nextX, 10),
       y: parseInt(this.state.inputs.nextY, 10),
       radius: 5,
-      color: '#FF0000'
+      color: this.state.inputs.nextColor
     }
     newState.nodes.ids.push(nextId)
     this.lsSetState(newState)
@@ -142,6 +143,7 @@ class App extends Component {
         <p>
           <input value={this.state.inputs.nextX} onChange={this.handleInputChange('nextX')} />
           <input value={this.state.inputs.nextY} onChange={this.handleInputChange('nextY')} />
+          <input type="color" value={this.state.inputs.nextColor} onChange={this.handleInputChange('nextColor')} />
           <button onClick={this.handleAddNode}>Add node</button>
         </p>
         <ul style={{ listStyle: 'none' }}>
@@ -154,7 +156,7 @@ class App extends Component {
         </ul>
         <p>
           <input value={this.state.inputs.node1_id} onChange={this.handleInputChange('node1_id')} />
-          <input value={this.state.inputs.ode2_id} onChange={this.handleInputChange('node2_id')} />
+          <input value={this.state.inputs.node2_id} onChange={this.handleInputChange('node2_id')} />
           <button onClick={this.handleAddSynapse}>Add synapse</button>
         </p>
         <ul style={{ listStyle: 'none' }}>
