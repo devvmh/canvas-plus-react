@@ -20,10 +20,12 @@ class PixiCanvas extends Component {
     return (
       <Stage width={this.props.width} height={this.props.height} backgroundColor={0x000000}>
         {this.synapses().map(synapse => {
+          const node1 = this.props.state.nodes.byId[synapse.node1_id]
+          const node2 = this.props.state.nodes.byId[synapse.node2_id]
           return (
-            <Synapse key={`from${synapse.node1_id}to${synapse.node2_id}`}
-              node1={this.props.state.nodes.byId[synapse.node1_id]}
-              node2={this.props.state.nodes.byId[synapse.node2_id]}
+            <Synapse key={`from${node1.x},${node1.y}to${node2.x},${node2.y}`}
+              node1={node1}
+              node2={node2}
             />
           )
         })}
