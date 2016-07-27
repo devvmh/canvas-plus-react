@@ -33,8 +33,8 @@ class App extends Component {
         },
         nodes: {
           byId: {
-            1: { id: 1, x: 10, y: 10, color: '#ff0000', radius: 5 },
-            2: { id: 2, x: 110, y: 10, color: '#ff0000', radius: 5 }
+            1: { id: 1, x: 10, y: 10, color: '#ff0000', radius: 10 },
+            2: { id: 2, x: 110, y: 10, color: '#ff0000', radius: 10 }
           },
           ids: [1, 2]
         },
@@ -79,7 +79,7 @@ class App extends Component {
       id: nextId,
       x: parseInt(this.state.inputs.nextX, 10),
       y: parseInt(this.state.inputs.nextY, 10),
-      radius: 5,
+      radius: 10,
       color: this.state.inputs.nextColor
     }
     newState.nodes.ids.push(nextId)
@@ -133,12 +133,6 @@ class App extends Component {
   render = () => {
     return (
       <div className="App">
-        <div className="App-header">
-          <h2>Welcome to React</h2>
-        </div>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
         <canvas width="200" height="200" id="test-canvas" />
         <p>
           <input value={this.state.inputs.nextX} onChange={this.handleInputChange('nextX')} />
@@ -146,7 +140,7 @@ class App extends Component {
           <input type="color" value={this.state.inputs.nextColor} onChange={this.handleInputChange('nextColor')} />
           <button onClick={this.handleAddNode}>Add node</button>
         </p>
-        <ul style={{ listStyle: 'none' }}>
+        <ul>
           {this.nodes().map(node => (
             <li key={node.id}>
               <span>{JSON.stringify(node)}</span>
@@ -159,7 +153,7 @@ class App extends Component {
           <input value={this.state.inputs.node2_id} onChange={this.handleInputChange('node2_id')} />
           <button onClick={this.handleAddSynapse}>Add synapse</button>
         </p>
-        <ul style={{ listStyle: 'none' }}>
+        <ul>
           {this.synapses().map(synapse => (
             <li key={synapse.id}>
               <span>{JSON.stringify(synapse)}</span>

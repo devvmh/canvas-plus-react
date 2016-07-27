@@ -18,7 +18,11 @@ class PixiCanvas extends Component {
 
   render = () => {
     return (
-      <Stage width={this.props.width} height={this.props.height} backgroundColor={0x000000}>
+      <Stage width={this.props.width}
+        height={this.props.height}
+        backgroundcolor={0xffffff}
+        draggable={true}
+      >
         {this.synapses().map(synapse => {
           const node1 = this.props.state.nodes.byId[synapse.node1_id]
           const node2 = this.props.state.nodes.byId[synapse.node2_id]
@@ -30,7 +34,7 @@ class PixiCanvas extends Component {
           )
         })}
         {this.nodes().map(node => {
-          return <Node key={`id${node.id}x${node.x}y${node.y}`} node={node} nodeX={node.x} nodeY={node.y} radius={5} />
+          return <Node key={`id${node.id}x${node.x}y${node.y}`} node={node} nodeX={node.x} nodeY={node.y} radius={node.radius} />
         })}
       </Stage>
     )
