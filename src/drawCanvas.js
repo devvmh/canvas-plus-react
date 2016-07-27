@@ -1,7 +1,8 @@
 const { Stage, Shape } = window.createjs
 
 const drawCanvas = (canvasId, nodes, synapses, changeNode) => {
-  const stage = new Stage(document.getElementById(canvasId))
+  window.stage = new Stage(document.getElementById(canvasId))
+  window.stage.clear()
   synapses.forEach(synapse => {
     const node1 = nodes.filter(node => node.id === synapse.node1_id)[0]
     const node2 = nodes.filter(node => node.id === synapse.node2_id)[0]
@@ -11,7 +12,7 @@ const drawCanvas = (canvasId, nodes, synapses, changeNode) => {
     line.graphics.moveTo(node1.x, node1.y)
     line.graphics.lineTo(node2.x, node2.y)
     line.graphics.endStroke()
-    stage.addChild(line)
+    window.stage.addChild(line)
   })
   nodes.forEach(node => {
     const circle = new Shape()
@@ -26,7 +27,7 @@ const drawCanvas = (canvasId, nodes, synapses, changeNode) => {
     circle.on("pressmove", function(e) {
       e.target.x = e.stageX + this.offset.x
       e.target.y = e.stageY + this.offset.y
-      stage.update()
+      window.stage.update()
     })
     circle.on("pressup", e => {
       changeNode(node.id, {
@@ -35,9 +36,9 @@ const drawCanvas = (canvasId, nodes, synapses, changeNode) => {
         y: e.stageY
       })
     })
-    stage.addChild(circle)
+    window.stage.addChild(circle)
   })
-  stage.update()
+  window.stage.update()
 }
 
 export default drawCanvas

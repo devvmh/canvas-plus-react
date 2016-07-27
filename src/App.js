@@ -109,14 +109,26 @@ class App extends Component {
 
   handleAddSynapse = () => {
     const newState = Object.assign({}, this.state)
+    const node1_id = parseInt(this.state.inputs.node1_id, 10)
+    const node2_id = parseInt(this.state.inputs.node2_id, 10)
+
+    newState.inputs.node1_id = ''
+    newState.inputs.node2_id = ''
+
+    if (!this.state.nodes.ids.includes(node1_id) ||
+        !this.state.nodes.ids.includes(node1_id)) {
+      // error check
+      return this.lsSetState(newState)
+    }
+
     const nextId = this.synapses().length === 0
       ? 1
       : this.state.synapses.ids[this.state.synapses.ids.length - 1] + 1
 
     newState.synapses.byId[nextId] = {
       id: nextId,
-      node1_id: parseInt(this.state.inputs.node1_id, 10),
-      node2_id: parseInt(this.state.inputs.node2_id, 10)
+      node1_id,
+      node2_id
     }
     newState.synapses.ids.push(nextId)
     this.lsSetState(newState)
