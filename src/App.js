@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import drawCanvas from './drawCanvas.js'
 import PixiCanvas from './PixiCanvas.js'
+import ThreeCanvas from './ThreeCanvas.js'
 
 const STATE_VERSION = 1
 
@@ -182,6 +183,11 @@ class App extends Component {
           ))}
         </ul>
         <PixiCanvas width={200} height={200} state={this.state} setState={this.lsSetState} />
+        <ThreeCanvas width={200}
+          height={200}
+          x={this.nodes()[0].x}
+          y={this.nodes()[0].y}
+        />
         <br/>
       </div>
     );

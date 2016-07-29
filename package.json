@@ -38,7 +38,9 @@
     "pixi.js": "^3.0.11",
     "react": "^15.2.1",
     "react-dom": "^15.2.1",
-    "react-pixi": "^0.8.1"
+    "react-pixi": "^0.8.1",
+    "react-three-renderer": "^2.2.0",
+    "three": "^0.79.0"
   },
   "scripts": {
     "start": "node ./scripts/start.js",
